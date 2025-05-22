@@ -18,7 +18,7 @@ library(dplyr)
 library(sf)
 library(tmap)
 
-nz <- st_read("../data/nz.gpkg")  # <1>
+nz <- st_read("data/nz.gpkg")  # <1>
 
 
 ## ------------------
@@ -39,7 +39,7 @@ mpt <- st_multipoint(matrix(runif(100, min = 50, max = 150), ncol = 2))
 
 ## ------------------
 #| label: read-quakes-data
-quakes <- read_csv("../data/earthquakes.csv")
+quakes <- read_csv("data/earthquakes.csv")
 head(quakes) |> as_tibble()
 
 
@@ -65,7 +65,7 @@ qtm(quakes_geo,
 
 ## ------------------
 #| label: read-nz-gpkg
-nz <- st_read("../data/nz.gpkg")
+nz <- st_read("data/nz.gpkg")
 
 
 ## ------------------
@@ -108,7 +108,7 @@ tmap_arrange(map1, map2)
 
 ## ------------------
 #| label: read-nz2.gpkg
-nz2 <- st_read("../data/nz2.gpkg")
+nz2 <- st_read("data/nz2.gpkg")
 
 
 ## ------------------
@@ -119,7 +119,7 @@ plot(nz2$geom)
 ## ------------------
 #| label: buffer-kindergartens-data
 #| output: false
-kindergartens <- st_read("../data/kindergartens.gpkg")
+kindergartens <- st_read("data/kindergartens.gpkg")
 kindergartens_1000 <- kindergartens |> st_buffer(1000)
 
 
@@ -142,7 +142,7 @@ qtm(kindergartens,
 ## ------------------
 #| label: read-welly-sa2-data
 #| output: false
-welly_sa2 <- st_read("../data/wellington-city-sa2.gpkg")
+welly_sa2 <- st_read("data/wellington-city-sa2.gpkg")
 welly_sa2
 
 
@@ -228,7 +228,7 @@ welly_sa2
 
 ## ------------------
 #| label: read-welly-census-data
-welly_data <- read.csv("../data/wellington-region-sa2-data.csv")
+welly_data <- read.csv("data/wellington-region-sa2-data.csv")
 welly_data
 
 
@@ -271,7 +271,7 @@ kindergartens |> st_within(welly_gdf, sparse = TRUE)
 
 ## ------------------
 #| label: read-school-zones-data
-school_zones <- st_read("../data/school-zones.gpkg")
+school_zones <- st_read("data/school-zones.gpkg")
 
 
 ## ------------------
@@ -381,7 +381,7 @@ library(terra)
 
 ## ------------------
 #| label: read-a-raster
-dem <- rast("../data/ak-dem.tif")
+dem <- rast("data/ak-dem.tif")
 dem
 
 
@@ -392,7 +392,7 @@ tm_shape(dem) + tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain2
 
 ## ------------------
 #| label: read-raster-stack
-layers <- dir("../data/raster-stack", pattern = ".*.tif", full.names = TRUE)
+layers <- dir("data/raster-stack", pattern = ".*.tif", full.names = TRUE)
 welly_stack <- rast(layers)
 welly_stack
 
@@ -405,7 +405,7 @@ tm_shape(welly_stack) + tm_raster()
 ## ------------------
 #| label: download-elevation
 library(geodata)
-elev <- rast("../data/elevation/srtm_71_21.tif")
+elev <- rast("data/elevation/srtm_71_21.tif")
 elev
 
 
