@@ -6,7 +6,6 @@
 
 
 ## ------------------
-#| output: false
 library(tidyverse)
 library(dplyr)
 library(palmerpenguins)
@@ -19,20 +18,20 @@ theme_set(theme_minimal())
 
 ## ------------------
 ggplot(penguins) +
-  geom_point(aes(x = flipper_length_mm, y = bill_length_mm)) # <1>
+  geom_point(aes(x = flipper_length_mm, y = bill_length_mm))
 
 
 ## ------------------
 ggplot(penguins) + 
   geom_point(aes(x = flipper_length_mm, y = bill_length_mm, 
-                 colour = species)) # <1>
+                 colour = species))
 
 
 ## ------------------
 ggplot(penguins) +
   geom_point(aes(x = flipper_length_mm, y = bill_length_mm, 
-                 colour = species, size = body_mass_g),      # <1> 
-             alpha = 0.6)                                    # <2>
+                 colour = species, size = body_mass_g), 
+             alpha = 0.6)
 
 
 ## ------------------
@@ -61,16 +60,14 @@ ggplot(penguins) +
 
 
 ## ------------------
-#| output: false
 library(sf)
 
-ak_areas       <- st_read("data/ak-2006-ethnicity-and-tb.gpkg") # <1>
+ak_areas       <- st_read("data/ak-2006-ethnicity-and-tb.gpkg")
 ak_major_roads <- st_read("data/ak-major-roads.gpkg")
 ak_tb_cases    <- st_read("data/ak-tb-cases.gpkg")
 
 
 ## ------------------
-#| echo: false
 ak_areas
 
 
@@ -104,7 +101,7 @@ ggplot(ak_areas) +
 ## ------------------
 ggplot(ak_areas) +
   geom_sf() +
-  theme_void() # <1>
+  theme_void()
 
 
 ## ------------------
@@ -222,11 +219,11 @@ ggplot(ak_areas_long) +
 
 
 ## ------------------
-library(terra)                              # <1>
+library(terra)
 
 hillshade <- rast("data/ak-hillshade.tif")
 xyz <- hillshade |>
-  terra::as.data.frame(xy = TRUE)           # <2>
+  terra::as.data.frame(xy = TRUE)
 xyz |> slice(1:5)
 
 
@@ -234,7 +231,7 @@ xyz |> slice(1:5)
 ggplot(xyz) +
   geom_raster(aes(x = x, y = y, fill = hillshade)) +
   scale_fill_continuous_c4a_seq(palette = "brewer.greys") +
-  coord_sf() +                                              # <1>
+  coord_sf() +
   guides(fill = "none")
 
 
@@ -248,7 +245,6 @@ ggplot() +
 
 
 ## ------------------
-#| output-location: slide
 library(ggnewscale)
 
 ggplot() +
@@ -267,12 +263,12 @@ tmap_mode("plot")  #<1>
 
 
 ## ------------------
-tm_shape(ak_areas) +                  # <1>
-  tm_polygons(                        # <2>
-    "nz_european",                    # <3>
-    fill.scale = tm_scale_intervals(  # <4> 
-      style = "equal", n = 5,         # <5>
-      values = "brewer.reds")         # <6>
+tm_shape(ak_areas) +
+  tm_polygons(
+    "nz_european",
+    fill.scale = tm_scale_intervals( 
+      style = "equal", n = 5,
+      values = "brewer.reds")
     )
 
 
@@ -283,7 +279,7 @@ tm_shape(ak_areas) +
 
 
 ## ------------------
-qtm(ak_areas, fill = "nz_european")  # <1>
+qtm(ak_areas, fill = "nz_european")
 
 
 ## ------------------
@@ -294,7 +290,6 @@ tmap_options(
 
 
 ## ------------------
-#| output-location: slide
 map1 <- tm_shape(ak_areas) + 
   tm_polygons("pacific", 
     fill.scale = tm_scale_intervals("equal", n = 7), lwd = 0.2) +
@@ -322,7 +317,6 @@ tm_shape(ak_areas) +
 
 
 ## ------------------
-#| output-location: slide
 tm_shape(ak_areas) +
   tm_fill("nz_european",
     fill.scale = tm_scale_continuous(values = "-hcl.reds3"),
@@ -333,7 +327,7 @@ tm_shape(ak_areas) +
 
 
 ## ------------------
-tm_shape(ak_context, bbox = st_bbox(ak_areas)) + # <1>
+tm_shape(ak_context, bbox = st_bbox(ak_areas)) +
   tm_fill() +
   tm_shape(ak_areas) +
   tm_polygons(fill = "grey", col = "white")
@@ -347,9 +341,8 @@ tm_shape(ak_areas) +
 
 
 ## ------------------
-#| output-location: slide
 elevation <- rast("data/ak-dem.tif")
-tmap_options(raster.max_cells = 50000) # <1>
+tmap_options(raster.max_cells = 50000)
 tm_shape(ak_areas) +
   tm_polygons("maori") +
   tm_shape(hillshade) +
@@ -359,7 +352,6 @@ tm_shape(ak_areas) +
 
 
 ## ------------------
-#| output-location: slide
 elevation <- rast("data/ak-dem.tif")
 tm_shape(elevation) +
   tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain")) +
@@ -372,16 +364,15 @@ tm_shape(elevation) +
 ## ------------------
 m <- tm_shape(ak_areas) + 
   tm_polygons(
-    fill = c("asian", "maori", "nz_european", "pacific"), # <1>
-    fill.free = FALSE,                                    # <2>
+    fill = c("asian", "maori", "nz_european", "pacific"),
+    fill.free = FALSE,
     fill.legend = tm_legend("% population")) +
-  tm_layout(panel.label.bg.color = NA,                    # <3>
+  tm_layout(panel.label.bg.color = NA,
             panel.label.frame = FALSE) +
-  tm_facets(nrow = 2, ncol = 2)                           # <4>
+  tm_facets(nrow = 2, ncol = 2)
 
 
 ## ------------------
-#| echo: false
 m
 
 
