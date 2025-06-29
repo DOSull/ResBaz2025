@@ -62,9 +62,9 @@ ggplot(penguins) +
 ## ------------------
 library(sf)
 
-ak_areas       <- st_read("../data/ak-2006-ethnicity-and-tb.gpkg")
-ak_major_roads <- st_read("../data/ak-major-roads.gpkg")
-ak_tb_cases    <- st_read("../data/ak-tb-cases.gpkg")
+ak_areas       <- st_read("data/ak-2006-ethnicity-and-tb.gpkg")
+ak_major_roads <- st_read("data/ak-major-roads.gpkg")
+ak_tb_cases    <- st_read("data/ak-tb-cases.gpkg")
 
 
 ## ------------------
@@ -123,7 +123,7 @@ ggplot() +
 
 
 ## ------------------
-ak_context <- st_read("../data/ak-context.gpkg")
+ak_context <- st_read("data/ak-context.gpkg")
 
 
 ## ------------------
@@ -221,7 +221,7 @@ ggplot(ak_areas_long) +
 ## ------------------
 library(terra)
 
-hillshade <- rast("../data/ak-hillshade.tif")
+hillshade <- rast("data/ak-hillshade.tif")
 xyz <- hillshade |>
   terra::as.data.frame(xy = TRUE)
 xyz |> slice(1:5)
@@ -342,7 +342,7 @@ tm_shape(ak_areas) +
 
 
 ## ------------------
-elevation <- rast("../data/ak-dem.tif")
+elevation <- rast("data/ak-dem.tif")
 tmap_options(raster.max_cells = 50000)
 tm_shape(ak_areas) +
   tm_polygons("maori") +
@@ -353,7 +353,7 @@ tm_shape(ak_areas) +
 
 
 ## ------------------
-elevation <- rast("../data/ak-dem.tif")
+elevation <- rast("data/ak-dem.tif")
 tm_shape(elevation) +
   tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain")) +
   tm_shape(hillshade) +
