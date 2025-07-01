@@ -374,7 +374,7 @@ tm_shape(elevation) +
 
 
 ## ------------------
-m <- tm_shape(ak_areas) + 
+tm_shape(ak_areas) + 
   tm_polygons(
     fill = c("asian", "maori", "nz_european", "pacific"),
     fill.free = FALSE,
@@ -382,10 +382,6 @@ m <- tm_shape(ak_areas) +
   # tm_layout(panel.label.bg.color = NA,
   #           panel.label.frame = FALSE) +
   tm_facets(nrow = 2, ncol = 2)
-
-
-## ------------------
-m
 
 
 ## ------------------
