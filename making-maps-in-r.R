@@ -152,22 +152,22 @@ bb
 ggplot() +
   geom_sf(data = ak_context, lwd = 0) +
   geom_sf(data = ak_areas, fill = "grey", colour = "white") +
-  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]))
+  coord_sf(xlim = c(bb$xmin, bb$xmax), ylim = c(bb$ymin, bb$ymax))
 
 
 ## ------------------
 ggplot() +
   geom_sf(data = ak_context, lwd = 0) +
   geom_sf(data = ak_areas, fill = "grey", colour = "white") +
-  coord_sf(xlim = c(bb[1] - 2000, bb[3] + 2000), 
-           ylim = c(bb[2] - 2000, bb[4] + 2000))
+  coord_sf(xlim = c(bb$xmin, bb$xmax) + c(-2000, 2000), 
+           ylim = c(bb$ymin, bb$ymax) + c(-2000, 2000))
 
 
 ## ------------------
 ggplot() +
   geom_sf(data = ak_context, lwd = 0) +
   geom_sf(data = ak_areas, fill = "grey", colour = "white") +
-  coord_sf(xlim = c(bb[1], bb[3]), ylim = c(bb[2], bb[4]),
+  coord_sf(xlim = c(bb$xmin, bb$xmax), ylim = c(bb$ymin, bb$ymax),
            expand = FALSE)
 
 
