@@ -379,8 +379,8 @@ m <- tm_shape(ak_areas) +
     fill = c("asian", "maori", "nz_european", "pacific"),
     fill.free = FALSE,
     fill.legend = tm_legend("% population")) +
-  tm_layout(panel.label.bg.color = NA,
-            panel.label.frame = FALSE) +
+  # tm_layout(panel.label.bg.color = NA,
+  #           panel.label.frame = FALSE) +
   tm_facets(nrow = 2, ncol = 2)
 
 
