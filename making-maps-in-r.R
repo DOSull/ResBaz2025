@@ -4,6 +4,17 @@
 # CC-BY-NC-SA 4.0
 # https://creativecommons.org/licenses/by-nc-sa/4.0/
 
+# install.packages(
+#   c("tidyverse", 
+#     "dplyr", 
+#     "palmerpenguins", 
+#     "ggplot2", 
+#     "cols4all", 
+#     "sf", 
+#     "ggspatial", 
+#     "terra", 
+#     "ggnewscale"
+#     ))
 
 ## ------------------
 library(tidyverse)

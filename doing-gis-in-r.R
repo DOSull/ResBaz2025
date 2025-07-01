@@ -6,7 +6,12 @@
 
 
 ## -------------------
-# install.packages(c("sf", "terra"))
+# install.packages(
+#   c("tidyverse",
+#     "dplyr",
+#     "sf",
+#     "tmap",
+#     "terra"))
 
 
 ## -------------------
