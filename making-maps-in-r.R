@@ -218,7 +218,7 @@ ggplot(ak_areas) +
 
 ## ------------------
 ak_areas_long <- ak_areas |>
-  pivot_longer(cols = c("nz_european", "maori", "pacific", "asian"))
+  pivot_longer(cols = c(nz_european, maori, pacific, asian))
 ak_areas_long
 
 
