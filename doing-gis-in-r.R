@@ -1,6 +1,6 @@
 ## -------------------
 # Doing GIS in R - workshop © 2025 
-# by David O'Sullivan is licensed under 
+# by David O'Sullivan is licensed under   
 # CC-BY-NC-SA 4.0
 # https://creativecommons.org/licenses/by-nc-sa/4.0/
 
@@ -16,7 +16,7 @@
 
 
 ## -------------------
-library(tidyverse)
+ library(tidyverse)
 library(dplyr)
 library(sf)
 library(tmap)
@@ -76,7 +76,7 @@ World |> st_transform("+proj=ortho +lon_0=180") |>
 
 ## -------------------
 World |> st_transform("ESRI:53077") |>
-  qtm()
+  qtm() + tm_graticules(x = -6:6 * 30, y = -3:3 * 30)
 
 
 ## -------------------
@@ -108,7 +108,7 @@ kindergartens_1000 <- kindergartens |> st_buffer(1000)
 qtm(nz, lwd = 0, 
     bbox = kindergartens_1000) +
 qtm(kindergartens_1000, 
-    fill = "dodgerblue", fill.alpha = 0.3, 
+    fill = "dodgerblue", fill_alpha = 0.3, 
     lwd = 0) +
 qtm(kindergartens, 
     size = 0.2)
@@ -215,7 +215,7 @@ qtm(nz, lwd = 0,
 qtm(welly_gdf, lwd = 0.2,
     fill = "pink") + 
 qtm(school_zones, lwd = 0.3, 
-    fill = "dodgerblue", fill.alpha = 0.3) + 
+    fill = "dodgerblue", fill_alpha = 0.3) + 
 qtm(kindergartens, 
     size = 0.35)
 
@@ -250,11 +250,9 @@ welly_gdf |>
 
 
 ## -------------------
-school_zones_in_kelburn <- school_zones |>
-  st_intersection(kelburn |> st_buffer(1000))
-qtm(welly_gdf, bbox = kelburn |> st_buffer(1500)) +
-  qtm(kelburn, fill = "darkgrey", lwd = 0) +
-  qtm(school_zones_in_kelburn, fill = "#ff000040", col = "white")
+welly_gdf |>
+  st_intersection(kindergartens_1000 |> slice(1)) |> 
+  qtm()
 
 
 ## -------------------
@@ -303,11 +301,10 @@ welly_stack
 
 
 ## -------------------
-tm_shape(welly_stack) + tm_raster()
+welly_stack |> qtm()
 
 
 ## -------------------
-library(geodata)
 elev <- rast("data/elevation/srtm_71_21.tif")
 elev
 
@@ -328,8 +325,8 @@ tm_shape(welly_elev) + tm_raster(col.scale = tm_scale_continuous(values = "hcl.t
 
 ## -------------------
 # elev |> project("EPSG:2193")
+# elev |> project(crs(welly_stack))
 # elev |> project(st_crs(welly_gdf)$wkt)
-
 
 ## -------------------
 # elev |> project("EPSG:2193", res = 100)
@@ -367,7 +364,7 @@ tmap_arrange(list(qtm(warm), qtm(dry), qtm(warm_and_dry)))
 welly_elev |>
   focal(w = 7, fun = "sd", na.rm = TRUE) |>
   mask(welly_elev) |>
-  tm_shape() + tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain2"))
+  tm_shape() + tm_raster(col.scale = tm_scale_continuous(values = "brewer.reds"))
 
 
 ## -------------------
@@ -377,15 +374,7 @@ weights <- matrix(c( 0, -1, 0,
 welly_elev |>
   focal(w = weights, fun = "sum", na.rm = TRUE) |>
   mask(welly_elev) |>
-  tm_shape() + tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain2"))
-
-
-## -------------------
-w <- focalMat(welly_elev, 200, "Gauss")
-welly_elev |>
-  focal(w, fun = "sd", na.rm = TRUE) |>
-  mask(welly_elev) |>
-  tm_shape() + tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain2"))
+  tm_shape() + tm_raster(col.scale = tm_scale_continuous(values = "brewer.reds"))
 
 
 ## -------------------
@@ -408,5 +397,6 @@ welly_elev |> terra::extract(
 
 ## -------------------
 welly_elev |> terra::extract(
-  school_zones |> as("SpatVector"), fun = "mean", bind = TRUE, ID = FALSE) |>
+  school_zones |> as("SpatVector"), 
+  fun = "mean", bind = TRUE, ID = FALSE, na.rm = TRUE) |>
   st_as_sf()
