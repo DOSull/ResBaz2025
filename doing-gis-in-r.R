@@ -106,11 +106,15 @@ kindergartens_1000 <- kindergartens |> st_buffer(1000)
 
 
 ## ------------------
-qtm(nz, lwd = 0, 
+qtm(nz, 
+    lwd = 0, 
     bbox = kindergartens_1000) +
-qtm(kindergartens_1000, lwd = 0, 
-    fill = "dodgerblue", fill_alpha = 0.3) +
-qtm(kindergartens, size = 0.2)
+qtm(kindergartens_1000, 
+    lwd = 0, 
+    fill = "dodgerblue", 
+    fill_alpha = 0.3) +
+qtm(kindergartens, 
+    size = 0.2)
 
 
 ## ------------------
@@ -120,16 +124,24 @@ welly_sa2_c <- welly_sa2 |>
 
 
 ## ------------------
-qtm(nz, lwd = 0, bbox = welly_sa2) +
-qtm(welly_sa2, fill = "grey", col = "white") +
-qtm(welly_sa2_c, size = 0.2)
+qtm(nz, 
+    lwd = 0, 
+    bbox = welly_sa2) +
+qtm(welly_sa2, 
+    fill = "grey", 
+    col = "white") +
+qtm(welly_sa2_c, 
+    size = 0.2)
 
 
 ## ------------------
-kelburn <- welly_sa2 |> slice(36)
-kelburn_hull <- kelburn |> st_convex_hull()
+kelburn <- welly_sa2 |> 
+  slice(36)
+kelburn_hull <- kelburn |> 
+  st_convex_hull()
 qtm(kelburn) + 
-  qtm(kelburn_hull, fill = "#ff000040")
+  qtm(kelburn_hull, 
+      fill = "#ff000040")
 
 
 ## ------------------
@@ -141,15 +153,27 @@ rectangles <- welly_sa2 |>
 
 
 ## ------------------
-qtm(nz, lwd = 0, bbox = welly_sa2) +
-qtm(welly_sa2,  fill = "grey", col = "white") +
-qtm(circles, fill = "#ff000030", col = "red")
+qtm(nz, 
+    lwd = 0, 
+    bbox = welly_sa2) +
+qtm(welly_sa2,  
+    fill = "grey", 
+    col = "white") +
+qtm(circles, 
+    fill = "#ff000030", 
+    col = "red")
 
 
 ## ------------------
-qtm(nz, lwd = 0, bbox = welly_sa2) +
-qtm(welly_sa2, fill = "grey", col = "white") +
-qtm(rectangles, fill = "#0000ff30", col = "blue")
+qtm(nz, 
+    lwd = 0, 
+    bbox = welly_sa2) +
+qtm(welly_sa2, 
+    fill = "grey", 
+    col = "white") +
+qtm(rectangles, 
+    fill = "#0000ff30", 
+    col = "blue")
 
 
 ## ------------------
@@ -168,9 +192,15 @@ welly_gdf
 
 
 ## ------------------
-qtm(nz2,  lwd = 0, bbox = welly_gdf) + 
-qtm(welly_gdf, fill = "pink", lwd = 0.35) + 
-qtm(kindergartens, size = 0.4, fill = "red")
+qtm(nz2,  
+    lwd = 0, 
+    bbox = welly_gdf) + 
+qtm(welly_gdf, 
+    fill = "pink", 
+    lwd = 0.35) + 
+qtm(kindergartens, 
+    size = 0.4, 
+    fill = "red")
 
 
 ## ------------------
@@ -188,10 +218,18 @@ school_zones <- st_read("data/school-zones.gpkg")
 
 
 ## ------------------
-qtm(nz, lwd = 0, bbox = welly_gdf) + 
-qtm(welly_gdf, lwd = 0.2, fill = "pink") + 
-qtm(school_zones, lwd = 0.3, fill = "dodgerblue", fill_alpha = 0.3) + 
-qtm(kindergartens, size = 0.35)
+qtm(nz, 
+    lwd = 0, 
+    bbox = welly_gdf) + 
+qtm(welly_gdf, 
+    lwd = 0.2, 
+    fill = "pink") + 
+qtm(school_zones, 
+    lwd = 0.3, 
+    fill = "dodgerblue", 
+    fill_alpha = 0.3) + 
+qtm(kindergartens, 
+    size = 0.35)
 
 
 ## ------------------
@@ -245,9 +283,15 @@ k_voronoi <- kindergartens |>
 
 
 ## ------------------
-qtm(nz, lwd = 0, bbox = kindergartens) +
-qtm(k_voronoi, fill = "red", fill_alpha = 0.3, col = "white") +
-qtm(kindergartens, size = 0.2)
+qtm(nz, 
+    lwd = 0, 
+    bbox = kindergartens) +
+qtm(k_voronoi, 
+    fill = "red", 
+    fill_alpha = 0.3, 
+    col = "white") +
+qtm(kindergartens, 
+    size = 0.2)
 
 
 ## ------------------
@@ -258,9 +302,9 @@ library(terra)
 dem <- rast("data/ak-dem.tif")
 dem
 
-
 ## ------------------
-tm_shape(dem) + tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain2"))
+terrain <- tm_scale_continuous(values = "hcl.terrain2")
+tm_shape(dem) + tm_raster(col.scale = terrain)
 
 
 ## ------------------
@@ -286,7 +330,7 @@ qtm(elev) + qtm(welly_stack$mat)
 ## ------------------
 welly_elev <- elev |> 
   terra::project(welly_stack$mat)
-tm_shape(welly_elev) + tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain2"))
+tm_shape(welly_elev) + tm_raster(col.scale = terrain)
 
 
 ## ------------------
@@ -306,21 +350,21 @@ tm_shape(welly_elev) + tm_raster(col.scale = tm_scale_continuous(values = "hcl.t
 ## ------------------
 welly_elev |> 
   terra::aggregate(5) |>
-  tm_shape() + tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain2"))
+  tm_shape() + tm_raster(col.scale = terrain)
 
 
 ## ------------------
 welly_elev |> 
   disagg(5, method = "bilinear") |>
-  tm_shape() + tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain2"))
+  tm_shape() + tm_raster(col.scale = terrain)
 
 
 ## ------------------
 tmap_arrange(list(
   tm_shape(welly_elev) + 
-    tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain2")),
+    tm_raster(col.scale = terrain),
   tm_shape(welly_elev |> terra::aggregate(5) |> disagg(5, method = "bilinear")) + 
-    tm_raster(col.scale = tm_scale_continuous(values = "hcl.terrain2"))))
+    tm_raster(col.scale = terrain)))
 
 
 ## ------------------
